@@ -1,0 +1,34 @@
+# Business glossary: maps business terminology to underlying schema, embedded into
+# Chroma so the Schema-Linking agent can resolve domain jargon before generation.
+
+- term: "AUM"
+  expansion: "Assets Under Management"
+  maps_to: "SUM(holdings.quantity * holdings.cost_basis), typically grouped by portfolio or client"
+
+- term: "book of business"
+  expansion: "all clients and their portfolios managed"
+  maps_to: "clients JOIN portfolios"
+
+- term: "position"
+  expansion: "a holding of a specific asset in a portfolio"
+  maps_to: "holdings"
+
+- term: "instrument"
+  expansion: "a tradable asset such as a stock, bond, or ETF"
+  maps_to: "assets"
+
+- term: "buy-side activity / sell-side activity"
+  expansion: "trades where side = BUY or side = SELL"
+  maps_to: "trades.side"
+
+- term: "onboarding date"
+  expansion: "the date a client was onboarded to the firm"
+  maps_to: "clients.onboarded_date"
+
+- term: "risk tolerance"
+  expansion: "a client's stated investment risk appetite"
+  maps_to: "clients.risk_profile"
+
+- term: "cost basis"
+  expansion: "the original purchase value of a holding, used to estimate value/gains"
+  maps_to: "holdings.cost_basis"

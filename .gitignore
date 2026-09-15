@@ -1,0 +1,12 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+chroma_db/
+*.egg-info/
+.chainlit/
+.files/
+.pytest_cache/
+*.db
+*.sqlite

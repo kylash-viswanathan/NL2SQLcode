@@ -1,0 +1,51 @@
+# Sensitivity tags applied at ingestion (Layer 1).
+# Every downstream layer (schema-linking, HITL gate, governance masking) reads this file.
+# tag values: PII | confidential | public
+
+clients:
+  client_id: public
+  # full_name/email/phone/address are working contact info an advisor needs day to
+  # day; they're "confidential" (HITL-gated) rather than always-masked "PII", or
+  # every client-facing query would come back with the name blanked out.
+  full_name: confidential
+  email: confidential
+  phone: confidential
+  address: confidential
+  # ssn/account_number/date_of_birth are hard identifiers — always masked in
+  # results by governance, regardless of HITL outcome.
+  ssn: PII
+  account_number: PII
+  date_of_birth: PII
+  risk_profile: confidential
+  onboarded_date: public
+
+portfolios:
+  portfolio_id: public
+  client_id: public
+  portfolio_name: public
+  base_currency: public
+  created_date: public
+
+holdings:
+  holding_id: public
+  portfolio_id: public
+  ticker: public
+  quantity: confidential
+  cost_basis: confidential
+  as_of_date: public
+
+trades:
+  trade_id: public
+  portfolio_id: public
+  ticker: public
+  side: public
+  quantity: confidential
+  price: confidential
+  trade_date: public
+
+assets:
+  ticker: public
+  asset_name: public
+  asset_class: public
+  sector: public
+  currency: public

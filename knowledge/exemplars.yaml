@@ -1,0 +1,38 @@
+# Few-shot NL question -> SQL exemplars, embedded into Chroma for retrieval by the
+# SQL Generation agent. Keep these aligned with the wealth & portfolio management domain.
+
+- question: "How many clients do we have?"
+  sql: "SELECT COUNT(*) FROM clients;"
+
+- question: "List all portfolios for client Alice Nakamura."
+  sql: "SELECT p.portfolio_id, p.portfolio_name FROM portfolios p JOIN clients c ON p.client_id = c.client_id WHERE c.full_name = 'Alice Nakamura';"
+
+- question: "What is the total quantity of AAPL held across all portfolios?"
+  sql: "SELECT SUM(quantity) FROM holdings WHERE ticker = 'AAPL';"
+
+- question: "What are the holdings in the Alice Growth Portfolio?"
+  sql: "SELECT h.ticker, h.quantity, h.cost_basis FROM holdings h JOIN portfolios p ON h.portfolio_id = p.portfolio_id WHERE p.portfolio_name = 'Alice Growth Portfolio';"
+
+- question: "Show all trades made in the last 30 days."
+  sql: "SELECT * FROM trades WHERE trade_date >= date('now', '-30 day');"
+
+- question: "Which clients have an aggressive risk profile?"
+  sql: "SELECT full_name FROM clients WHERE risk_profile = 'aggressive';"
+
+- question: "What is the estimated market value of each holding, assuming price equals cost basis?"
+  sql: "SELECT ticker, quantity, cost_basis, quantity * cost_basis AS estimated_value FROM holdings;"
+
+- question: "List all technology sector assets."
+  sql: "SELECT ticker, asset_name FROM assets WHERE sector = 'Technology';"
+
+- question: "How many BUY trades were made for TSLA?"
+  sql: "SELECT COUNT(*) FROM trades WHERE ticker = 'TSLA' AND side = 'BUY';"
+
+- question: "What is a client's SSN and account number?"
+  sql: "SELECT ssn, account_number FROM clients WHERE full_name = 'Alice Nakamura';"
+
+- question: "List all portfolios and their base currency."
+  sql: "SELECT portfolio_name, base_currency FROM portfolios;"
+
+- question: "Which portfolio has the most holdings?"
+  sql: "SELECT portfolio_id, COUNT(*) AS holding_count FROM holdings GROUP BY portfolio_id ORDER BY holding_count DESC LIMIT 1;"
