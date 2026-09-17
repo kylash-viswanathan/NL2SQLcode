@@ -31,5 +31,10 @@ class GraphState(TypedDict, total=False):
     masked_columns: list[str]
     masked_rows: list[list[Any]]
 
+    # Critic / Evaluation agent (Layer 4) — post-execution faithfulness check,
+    # orthogonal to the HITL gate (access control vs. correctness)
+    critic_passed: Optional[bool]
+    critic_reason: Optional[str]
+
     # Response
     response: str

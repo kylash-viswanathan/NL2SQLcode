@@ -19,6 +19,7 @@ from agents.runner import (
     stream_resume_with_decision,
     stream_start_question,
 )
+from observability.langfuse_setup import flush as flush_langfuse
 
 REPO_ROOT = Path(__file__).resolve().parent
 SCHEMA_METADATA_PATH = REPO_ROOT / "ingestion" / "schema_metadata.json"
@@ -32,6 +33,7 @@ STAGE_PHASE_WORD = {
     "hitl_gate": "Reviewing",
     "execution": "Executing",
     "governance": "Masking",
+    "critic": "Verifying",
     "response": "Responding",
 }
 
@@ -42,6 +44,7 @@ STAGE_LABELS = {
     "hitl_gate": "HITL Gate — checking for sensitive data",
     "execution": "Execution — running the query",
     "governance": "Governance — masking sensitive columns",
+    "critic": "Critic — verifying the answer is correct",
     "response": "Response — composing the answer",
 }
 
@@ -228,6 +231,11 @@ async def on_chat_start():
 async def on_message(message: cl.Message):
     thread_id = cl.user_session.get("thread_id")
     await _process_query(message.content, thread_id)
+
+
+@cl.on_chat_end
+async def on_chat_end():
+    await cl.make_async(flush_langfuse)()
 
 
 @cl.action_callback("approve")

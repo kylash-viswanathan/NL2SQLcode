@@ -35,4 +35,10 @@ def response_node(state: GraphState) -> GraphState:
         ),
     ]
     result = llm.invoke(messages)
-    return {"response": result.content.strip()}
+    answer = result.content.strip()
+
+    if state.get("critic_passed") is False:
+        reason = state.get("critic_reason") or "the result may not fully answer the question"
+        answer = f"⚠️ This answer could not be fully verified ({reason}). Please double-check it.\n\n{answer}"
+
+    return {"response": answer}

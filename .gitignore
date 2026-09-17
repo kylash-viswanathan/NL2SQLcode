@@ -10,3 +10,4 @@ chroma_db/
 .pytest_cache/
 *.db
 *.sqlite
+.claude/settings.local.json

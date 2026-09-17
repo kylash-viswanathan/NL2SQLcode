@@ -1,10 +1,12 @@
 """Wires the Planner -> Schema-Linking -> SQL Generation -> HITL Gate -> Execution ->
-Governance -> Response agents into a single LangGraph StateGraph, with a bounded
-self-healing retry loop on execution failure and an interrupt-based HITL pause/resume.
+Governance -> Critic -> Response agents into a single LangGraph StateGraph, with a
+bounded self-healing retry loop (shared between Execution's DB-error retries and the
+Critic's correctness-check retries) and an interrupt-based HITL pause/resume.
 """
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, START, StateGraph
 
+from agents.critic import critic_node
 from agents.execution import execution_node
 from agents.hitl_gate import hitl_gate_node
 from agents.planner import planner_node
@@ -33,6 +35,14 @@ def route_after_execution(state: GraphState) -> str:
     return "governance"
 
 
+def route_after_critic(state: GraphState) -> str:
+    if state.get("critic_passed", True):
+        return "response"
+    if state.get("retry_count", 0) < settings.max_self_heal_retries:
+        return "sql_generation"
+    return "response"  # retries exhausted — response.py adds an unverified-answer caveat
+
+
 def build_graph():
     graph = StateGraph(GraphState)
 
@@ -42,6 +52,7 @@ def build_graph():
     graph.add_node("hitl_gate", hitl_gate_node)
     graph.add_node("execution", execution_node)
     graph.add_node("governance", governance_node)
+    graph.add_node("critic", critic_node)
     graph.add_node("response", response_node)
 
     graph.add_edge(START, "planner")
@@ -54,7 +65,8 @@ def build_graph():
     graph.add_conditional_edges(
         "execution", route_after_execution, ["sql_generation", "governance"]
     )
-    graph.add_edge("governance", "response")
+    graph.add_edge("governance", "critic")
+    graph.add_conditional_edges("critic", route_after_critic, ["sql_generation", "response"])
     graph.add_edge("response", END)
 
     checkpointer = MemorySaver()

@@ -37,7 +37,7 @@ def _build_context(state: GraphState) -> str:
 
     if state.get("last_error"):
         parts.append(
-            f"\nThe previous attempt failed with this database error — fix the query:\n{state['last_error']}\nPrevious SQL: {state.get('sql', '')}"
+            f"\nThe previous attempt failed — fix the query:\n{state['last_error']}\nPrevious SQL: {state.get('sql', '')}"
         )
 
     return "\n".join(parts)
