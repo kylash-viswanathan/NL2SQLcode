@@ -10,4 +10,6 @@ chroma_db/
 .pytest_cache/
 *.db
 *.sqlite
-.claude/settings.local.json
+.claude/
+CLAUDE.md
+Project Documents/Demo_Video_Script.md
