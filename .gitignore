@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+chroma_db/
+*.egg-info/
+.chainlit/
+.files/
+.pytest_cache/
+*.db
+*.sqlite
+.claude/
+CLAUDE.md
+Project Documents/Demo_Video_Script.md

@@ -1,0 +1,227 @@
+{
+  "tables": [
+    {
+      "name": "clients",
+      "columns": [
+        {
+          "name": "client_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "sensitivity": "public"
+        },
+        {
+          "name": "full_name",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "confidential"
+        },
+        {
+          "name": "ssn",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "PII"
+        },
+        {
+          "name": "date_of_birth",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "PII"
+        },
+        {
+          "name": "email",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "confidential"
+        },
+        {
+          "name": "phone",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "confidential"
+        },
+        {
+          "name": "address",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "confidential"
+        },
+        {
+          "name": "account_number",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "PII"
+        },
+        {
+          "name": "risk_profile",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "confidential"
+        },
+        {
+          "name": "onboarded_date",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "public"
+        }
+      ]
+    },
+    {
+      "name": "portfolios",
+      "columns": [
+        {
+          "name": "portfolio_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "sensitivity": "public"
+        },
+        {
+          "name": "client_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "sensitivity": "public"
+        },
+        {
+          "name": "portfolio_name",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "public"
+        },
+        {
+          "name": "base_currency",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "public"
+        },
+        {
+          "name": "created_date",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "public"
+        }
+      ]
+    },
+    {
+      "name": "assets",
+      "columns": [
+        {
+          "name": "ticker",
+          "type": "TEXT",
+          "primary_key": true,
+          "sensitivity": "public"
+        },
+        {
+          "name": "asset_name",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "public"
+        },
+        {
+          "name": "asset_class",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "public"
+        },
+        {
+          "name": "sector",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "public"
+        },
+        {
+          "name": "currency",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "public"
+        }
+      ]
+    },
+    {
+      "name": "holdings",
+      "columns": [
+        {
+          "name": "holding_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "sensitivity": "public"
+        },
+        {
+          "name": "portfolio_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "sensitivity": "public"
+        },
+        {
+          "name": "ticker",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "public"
+        },
+        {
+          "name": "quantity",
+          "type": "REAL",
+          "primary_key": false,
+          "sensitivity": "confidential"
+        },
+        {
+          "name": "cost_basis",
+          "type": "REAL",
+          "primary_key": false,
+          "sensitivity": "confidential"
+        },
+        {
+          "name": "as_of_date",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "public"
+        }
+      ]
+    },
+    {
+      "name": "trades",
+      "columns": [
+        {
+          "name": "trade_id",
+          "type": "INTEGER",
+          "primary_key": true,
+          "sensitivity": "public"
+        },
+        {
+          "name": "portfolio_id",
+          "type": "INTEGER",
+          "primary_key": false,
+          "sensitivity": "public"
+        },
+        {
+          "name": "ticker",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "public"
+        },
+        {
+          "name": "side",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "public"
+        },
+        {
+          "name": "quantity",
+          "type": "REAL",
+          "primary_key": false,
+          "sensitivity": "confidential"
+        },
+        {
+          "name": "price",
+          "type": "REAL",
+          "primary_key": false,
+          "sensitivity": "confidential"
+        },
+        {
+          "name": "trade_date",
+          "type": "TEXT",
+          "primary_key": false,
+          "sensitivity": "public"
+        }
+      ]
+    }
+  ]
+}
