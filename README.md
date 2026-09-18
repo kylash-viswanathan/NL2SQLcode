@@ -123,10 +123,58 @@ This build is Phase 0 only. Later phases, per `Project Documents/TrustQuery_AI_P
   AgentCore as a hosting option.
 
 Also flagged during this build, not in the original plan but natural
-follow-ons: automating the offline DeepEval → SME-curation → golden-set-update
-loop (currently just the design in the orchestration diagram), and unifying
-the live Critic agent's judgment with DeepEval's `GEval` metric so "what
-counts as correct" is defined in one place instead of two independent judges.
+follow-ons:
+
+- **Close the evaluation loop**: automate the offline DeepEval →
+  SME-curation → golden-set-update cycle (currently just the design in the
+  orchestration diagram), and unify the live Critic agent's judgment with
+  DeepEval's `GEval` metric so "what counts as correct" is defined in one
+  place instead of two independent judges that can drift apart.
+- **Structured, validated response output**: the Response agent currently
+  returns a free-form markdown string. Define an explicit output
+  schema/contract (e.g. structured fields for the answer, SQL, and result
+  summary) so downstream consumers — a future production UI, an API
+  integration, or the Critic's own faithfulness check — can rely on a
+  consistent shape instead of parsing prose.
+- **Sharpen the user persona**: "business user" is currently generic.
+  Define a concrete persona (e.g. a portfolio advisor or a compliance
+  analyst) with a documented workflow and specific needs — this should
+  directly inform Phase 1's HITL threshold tuning and the expanded
+  100+-question golden set, rather than both being designed against an
+  undifferentiated user.
+
+## Release plan
+
+Future-scope items above, grouped into stable releases for issue-based
+development (each item becomes a GitHub issue tagged with its release
+milestone):
+
+**`v3.0` — User & Governance Foundations** (4 issues)
+1. Sharpen the user persona (concrete role, workflow, needs)
+2. Tune HITL gate thresholds on real usage signal
+3. Expand PII governance rules beyond static tagging
+4. Grow golden set from 12 to 100+ questions
+
+**`v3.1` — Evaluation & System Rigor** (3 issues)
+1. Close the evaluation loop: automate DeepEval → SME curation → golden-set update
+2. Unify Critic agent judgment with DeepEval's `GEval` metric
+3. Define a structured output schema/contract for the Response agent
+
+**`v4.0` — Pilot & Production Readiness** (9 issues)
+1. Roll out pilot to one business unit
+2. Instrument a user feedback loop
+3. Run first DSPy/fine-tuning optimization cycle via MLflow
+4. Add multi-source connector support
+5. Build cost monitoring dashboards
+6. Complete security/compliance review
+7. Write runbooks & on-call documentation
+8. Replace Chainlit with a production UI
+9. Directionally evaluate Amazon Bedrock AgentCore as a hosting option
+
+16 issues total across 3 releases. `v3.0`/`v3.1` carry forward Phase 1's
+acceptance bar (≥85% DeepEval accuracy, 100% sensitive columns masked, HITL
+false-positive rate <5%); `v4.0` carries Phase 2/3's (pilot satisfaction
+≥4/5, latency <10s, security/compliance review passed, runbooks accepted).
 
 ## Docs
 
