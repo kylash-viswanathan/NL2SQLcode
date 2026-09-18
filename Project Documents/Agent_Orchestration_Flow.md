@@ -96,5 +96,4 @@ flowchart LR
 `pytest` run) is implemented. `Traces → DeepEval` (DeepEval doesn't read
 Langfuse traces today), `SME Curation`, and the auto-update of `Golden Set`
 are all proposed, not built. The live Critic agent (see the diagram above)
-does **not** read from `Golden Set` in this version — see `CLAUDE.md` for why
-that's deferred.
+does **not** read from `Golden Set` in this version
