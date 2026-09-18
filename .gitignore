@@ -12,4 +12,7 @@ chroma_db/
 *.sqlite
 .claude/
 CLAUDE.md
+CHANGE_LOG.md
+CHANGE_LOG_FEATURES.md
+CHANGE_LOG_INFRA.md
 Project Documents/Demo_Video_Script.md

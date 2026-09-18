@@ -72,8 +72,9 @@ NL2SQLcode/
 
 ## Getting started
 
-Requires **Python 3.12** in a project-local venv (Chainlit's event-loop
-patch is incompatible with Python 3.14 — see `CLAUDE.md` for details).
+Requires **Python 3.12** in a project-local venv — Chainlit's event-loop
+patch is incompatible with Python 3.14
+(`anyio._core._exceptions.NoEventLoopError`), an upstream library issue.
 
 ```powershell
 py -3.12 -m venv .venv
@@ -100,8 +101,8 @@ Phase 0 success criteria — all met:
 
 **Explicitly out of scope for this build**: automated/nightly schema
 crawling, self-hosted Langfuse, DSPy/fine-tuning optimization, production UI,
-multi-source connectors, cloud hosting of the Chainlit UI. See `CLAUDE.md`
-for the full list and what's sequenced into later phases.
+multi-source connectors, cloud hosting of the Chainlit UI. These are
+sequenced into the phases below per the project plan.
 
 ## Future scope (per the project plan)
 
@@ -129,6 +130,4 @@ counts as correct" is defined in one place instead of two independent judges.
 
 ## Docs
 
-- [`CLAUDE.md`](CLAUDE.md) — full architecture, tech stack rationale, and design decisions
-- [`CHANGE_LOG_FEATURES.md`](CHANGE_LOG_FEATURES.md) / [`CHANGE_LOG_INFRA.md`](CHANGE_LOG_INFRA.md) — build history
 - [`Project Documents/`](Project%20Documents/) — original project plan, architecture doc, and the agent orchestration flow diagram
